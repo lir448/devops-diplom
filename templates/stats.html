@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Covid Stats</title>
+  </head>
+  <body>
+    <div>
+      <input type="button" onclick="history.back();" value="Назад"/><br/>
+    </div>
+    <p>{{ country }}</p>
+    <div>
+      <table border = 1>
+        <thead>
+          <tr>
+            <th>date_value</th>
+            <th>confirmed</th>
+            <th>deaths</th>
+            <th>stringency_actual</th>
+            <th>stringency</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{row["date_value"]}}</td>
+            <td>{{row["confirmed"]}}</td>
+            <td>{{row["deaths"]}}</td>
+            <td>{{row["stringency_actual"]}}</td>
+            <td>{{row["stringency"]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

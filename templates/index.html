@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Covid Stats</title>
+</head>
+<body>
+  <div>
+    <form method="post" action="{{ url_for('stats') }}">
+      <p>Select country by code, then press "view stats":</p>
+      <div>
+        <select name="country_code" class="select">
+        {% for country_code in countries %}
+        <option class="select" value="{{ country_code }}">{{country_code}}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <div>
+        <br/><button type="submit">View stats</button>
+      </div>
+    </form>
+  </div>
+  <div>
+    <form action="{{ url_for('update') }}">
+      <p>Update the database via covidtracker.bsg.ox.ac.uk:</p>
+      <button type="submit">Update database</button>
+    </form>
+  </div>
+</body>
+</html>
