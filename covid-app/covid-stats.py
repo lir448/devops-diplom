@@ -30,6 +30,15 @@ def main_app():
     df.to_sql('stats', con=engine, if_exists='replace', index=False)
 
 
+def stress_test():
+    prew = cur = 1
+    element = 1500000
+
+
+    for n in range(int(element-2)):
+        prew, cur = cur, prew + cur
+
+
 main_app()
 
 
@@ -56,6 +65,12 @@ def stats():
 def update():
    main_app()
    return render_template('update.html', timestamp = timestamp)
+
+
+@app.route('/stress')
+def stress():
+   stress_test()
+   return render_template('stress.html')
 
 
 if __name__ == '__main__':
