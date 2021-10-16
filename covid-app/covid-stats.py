@@ -1,10 +1,30 @@
+from os import environ
 import requests
 import json
 from datetime import date, datetime
 import pandas as pd
+import sqlalchemy
 from sqlalchemy import create_engine
+from sqlalchemy.engine.url import URL
 from flask import Flask, render_template, request
-import sqlite3 as sql
+import pymysql
+
+
+cred1 = {
+    "drivername": "mysql+pymysql",
+    "username": environ['MYSQL_USER'],
+    "password": environ['MYSQL_PASSWORD'],
+    "host": environ['MYSQL_HOST'],
+    "database": environ["MYSQL_DB"]
+}
+
+
+cred2 = {
+    "user": environ['MYSQL_USER'],
+    "password": environ['MYSQL_PASSWORD'],
+    "host": environ['MYSQL_HOST'],
+    "database": environ["MYSQL_DB"]
+}
 
 
 def main_app():
@@ -26,8 +46,8 @@ def main_app():
 
     df = df.T
     df = df.drop(['stringency_legacy','stringency_legacy_disp'], axis=1)
-    engine = create_engine('sqlite:///stats.db')
-    df.to_sql('stats', con=engine, if_exists='replace', index=False)
+    engine = sqlalchemy.create_engine(URL.create(**cred1))
+    df.to_sql(name='stats', con=engine, if_exists='replace', index=False)
 
 
 def stress_test():
@@ -35,7 +55,7 @@ def stress_test():
     element = 1500000
 
 
-    for n in range(int(element-2)):
+    for _ in range(int(element-2)):
         prew, cur = cur, prew + cur
 
 
@@ -46,18 +66,18 @@ app = Flask(__name__)
 
 
 @app.route('/')
+@app.route('/index')
 def index():
    return render_template('index.html', countries = countries)
 
 
-@app.route('/stats', methods=['POST','GET'])
+@app.route('/stats', methods=['POST'])
 def stats():
    country = request.form.get('country_code')
-   con = sql.connect('stats.db')
-   con.row_factory = sql.Row
+   con = pymysql.connect(**cred2)
    cur = con.cursor()
-   cur.execute("select * from stats where country_code = ? order by deaths", (country,))
-   rows = cur.fetchall();
+   cur.execute("select * from stats where country_code = %s order by deaths", (country,))
+   rows = cur.fetchall()
    return render_template('stats.html', rows = rows, country = country)
 
 
@@ -74,4 +94,4 @@ def stress():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
