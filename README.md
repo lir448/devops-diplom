@@ -3,7 +3,7 @@ Diploma task.
 Create a simple Web-application, CI/CD infrastructure and pipeline for it.
 
 
-Variant 3.
+Variant 3
 
 Using API https://covidtracker.bsg.ox.ac.uk/about-api get all data about “By country over time" for current year and store it into your DB:
 
