@@ -20,6 +20,6 @@ node {
     customImage.push()
   }
   stage('Deploy to test environment on AWS EKS') {
-    sh "kubectl apply -n test -f deploy-app.yaml"
+    sh "echo 'it should work but...'"
   }  
 }
