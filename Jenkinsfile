@@ -1,4 +1,11 @@
 node {
+  environment {
+        MYSQL_USER     = credentials('62036b91-363c-493c-b13e-cd3efd829368')
+        MYSQL_PASSWORD = credentials('ca729364-5c21-418d-a82c-246941d3fa07')
+        MYSQL_HOST     = terraform-20211017181751165500000008.cvvgdyrr5hra.us-east-1.rds.amazonaws.com
+        MYSQL_DB       = dbtest
+        KUBECONFIG     = '/home/ubuntu/.kube/config'
+  }
   stage('SCM') {
     checkout scm
   }
@@ -13,4 +20,7 @@ node {
     def customImage = docker.build("lir448/covid-stats:v${env.BUILD_ID}") 
     customImage.push()
   }
+  stage('Deploy to test environment on AWS EKS') {
+    sh "kubectl apply -n test -f deploy-app.yaml"
+  }  
 }
