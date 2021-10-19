@@ -9,7 +9,7 @@ node {
     }
   }
   stage('Docker build') {
-    def customImage = docker.build("lir448/covid-stats:${env.BUILD_ID}", "-f ${dockerfile} ./dockerfiles") 
+    def customImage = docker.build("lir448/covid-stats:${env.BUILD_ID}") 
     customImage.push()
   }
 }
