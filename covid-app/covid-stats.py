@@ -52,7 +52,7 @@ def main_app():
 
 def stress_test():
     prew = cur = 1
-    element = 1500000
+    element = 1750000
 
 
     for _ in range(int(element-2)):
@@ -94,4 +94,4 @@ def stress():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
