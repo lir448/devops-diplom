@@ -10,3 +10,6 @@ Using API https://covidtracker.bsg.ox.ac.uk/about-api get all data about “By c
 date_value, country_code, confirmed, deaths, stringency_actual, stringency.
 
 Output the data by country_code (the country_code is set) in the form of a table and sort them by deaths in ascending order.
+
+
+test piprline
