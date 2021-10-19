@@ -4,7 +4,6 @@ node {
         MYSQL_PASSWORD = credentials('ca729364-5c21-418d-a82c-246941d3fa07')
         MYSQL_HOST     = terraform-20211017181751165500000008.cvvgdyrr5hra.us-east-1.rds.amazonaws.com
         MYSQL_DB       = dbtest
-        KUBECONFIG     = '/home/ubuntu/.kube/config'
   }
   stage('SCM') {
     checkout scm
